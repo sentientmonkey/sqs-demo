@@ -1,0 +1,4 @@
+development:
+  access_key_id: YOUR_ACCESS_KEY
+  secret_access_key: YOUR_SECRET_ACCESS_KEY
+  simple_db_consistent_reads: false
