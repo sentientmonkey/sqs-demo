@@ -11,8 +11,7 @@ class JobsController < ApplicationController
 
   def show
     job_id = params[:id]
-    @status = {}
-    #@status = Resque::Plugins::Status::Hash.get(job_id)
+    @status = SleepJob.find(job_id)
     respond_to do |format|
       format.html
       format.json { render :json => @status.to_json }

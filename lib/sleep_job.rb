@@ -1,5 +1,6 @@
 class SleepJob
   include SQS::Job
+  include SQS::JobStatus
 
   def perform
     total = (self.options['length'] || 1000).to_i

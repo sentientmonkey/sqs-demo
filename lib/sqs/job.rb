@@ -34,6 +34,10 @@ module SQS
         @queue ||= sqs.queues.create(queue_name)
       end
 
+      def setup
+        queue
+      end
+
       def encode(object)
         MultiJson.encode(object)
       end
@@ -46,19 +50,23 @@ module SQS
         queue.send_message(encode(:klass => name.camelize, :args => args))
       end
 
-      def load(msg)
+      def load(id, msg)
         obj = decode(msg)
         Rails.logger.debug "obj is #{obj}"
         klass = Module.const_get(obj["klass"])
-        klass.new(obj["args"])
+        klass.new(id, obj["args"])
       end
     end
 
-    attr_accessor :options
+    attr_accessor :id, :options
 
-    def initialize(args)
+    def initialize(id, args)
       Rails.logger.debug "args #{args}"
+      @id = id
       @options = args.first
+    end
+
+    def complete
     end
  
   end
